@@ -1,0 +1,40 @@
+#Ignore all
+*.*
+*
+
+#exclude directory structure
+!app/
+app/*
+
+!app/payments/
+app/payments/*
+
+!app/payments/everypay
+!app/payments/everypay/*
+
+!design/
+design/*
+
+!design/backend/
+design/backend/*
+
+!design/backend/templates/
+design/backend/templates/*
+
+!design/backend/templates/views/
+design/backend/templates/views/*
+
+!design/backend/templates/views/payments/
+design/backend/templates/views/payments/*
+
+!design/backend/templates/views/payments/components/
+design/backend/templates/views/payments/components/*
+
+!design/backend/templates/views/payments/components/cc_processors/
+design/backend/templates/views/payments/components/cc_processors/*
+
+#all filenames containing string 'everypay' in the above 2 directories
+!**/*everypay*
+
+!.gitignore
+!README.md
