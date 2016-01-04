@@ -3,7 +3,7 @@ use Tygh\Registry;
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
-function fn_everypay_adjust_amount($price, $payment_currency)
+function fn_rzp_adjust_amount($price, $payment_currency)
 {
     $currencies = Registry::get('currencies');
 
@@ -18,7 +18,7 @@ function fn_everypay_adjust_amount($price, $payment_currency)
     return $price;
 }
 
-function fn_everypay_place_order($original_order_id)
+function fn_rzp_place_order($original_order_id)
 {
     $cart = & $_SESSION['cart'];
     $auth = & $_SESSION['auth'];
