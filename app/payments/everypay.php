@@ -9,7 +9,7 @@ if ( !defined('AREA') ) { die('Access denied'); }
 if (defined('PAYMENT_NOTIFICATION')) {
 //print_r($_REQUEST);echo "<br/><br/>";
     if ($mode == 'return' && !empty($_REQUEST['merchant_order_id'])) {
-        //echo "<br/>merchant order id is ok<br/>";
+        //$view = Registry::get('view');
         //$view->assign('order_action', __('placing_order'));
         //$view->display('views/orders/components/placing_order.tpl');
         //fn_flush();
@@ -21,8 +21,7 @@ if (defined('PAYMENT_NOTIFICATION')) {
             if (fn_check_payment_script('everypay.php', $merchant_order_id, $processor_data)) {
                 $secret_key = $processor_data['processor_params']['secret_key'];
                 $order_info = fn_get_order_info($merchant_order_id);
-                //$amount = fn_rzp_adjust_amount($order_info['total'], $processor_data['processor_params']['currency'])*100;
-                $amount = $order_info['total'];
+                $amount = fn_rzp_adjust_amount($order_info['total'], $processor_data['processor_params']['currency'])*100;
                 $description = "#".$merchant_order_id;
                 $test_mode = $processor_data['processor_params']['test_mode'];
 
@@ -80,10 +79,10 @@ if (defined('PAYMENT_NOTIFICATION')) {
                             $success = false;
 
                             if(!empty($response_array['error']['code'])) {
-                                $error = $response_array['error']['code'].":".$response_array['error']['description'];
+                                $error = $response_array['error']['code'].":".$response_array['error']['message'];
                             }
                             else {
-                                $error = "RAZORPAY_ERROR:Invalid Response <br/>".$result;
+                                $error = "EVERYPAY_ERROR:Invalid Response <br/>".$result;
                             }
                         }
                     }
@@ -99,19 +98,19 @@ if (defined('PAYMENT_NOTIFICATION')) {
                 if($success === true){
                     $pp_response['order_status'] = 'P';
                     $pp_response['reason_text'] = fn_get_lang_var('text_evp_success');
-                    $pp_response['transaction_id'] = @$order;
+                    $pp_response['transaction_id'] = $everypay_payment_id;//@$order;
                     $pp_response['client_id'] = $everypay_payment_id;
-
+//FIXME
                     fn_finish_payment($merchant_order_id, $pp_response);
                     fn_order_placement_routines('route', $merchant_order_id);
                 }
                 else {
                     $pp_response['order_status'] = 'O';
-                    $pp_response['reason_text'] = fn_get_lang_var('text_evp_pending').$error;
-                    $pp_response['transaction_id'] = @$order;
-                    $pp_response['client_id'] = $everypay_payment_id;
-
-                    fn_finish_payment($merchant_order_id, $pp_response);
+                    $pp_response['reason_text'] = fn_get_lang_var('text_evp_pending').'EveryPay:'.$error;
+                    $pp_response['transaction_id'] = '';//@$order;
+                    $pp_response['client_id'] = '';//$everypay_payment_id;
+//print_r($pp_response);exit;
+                    //fn_finish_payment($merchant_order_id, $pp_response);
                     fn_set_notification('E', __('error'), __('text_evp_failed_order').$merchant_order_id);
                     fn_order_placement_routines('checkout_redirect');
                 }
@@ -125,7 +124,7 @@ if (defined('PAYMENT_NOTIFICATION')) {
     }
     exit;
 }
-else {
+else { //load the payment form
     $url = fn_url("payment_notification.return?payment=everypay", AREA, 'current');
     //$checkout_url = "https://sandbox-button.everypay.gr/js/button.js";
     $urlButton = "https://button.everypay.gr/js/button.js";
@@ -160,7 +159,9 @@ else {
 
     $jsForm = '<script type="text/javascript">';
 
-    $jsForm .= "var EVERYPAY_DATA = {
+    $jsForm .= "
+
+var EVERYPAY_DATA = {
                 amount: '".$fields['amount']."',
                 description: 'Order# ".$fields['order_id']."',
                 key: '".$fields['key']."',
@@ -170,15 +171,14 @@ else {
                 max_installments: 0,
                 sandbox: ".$test_mode."
             };
-
             var loadButton = setInterval(function () {
                   try {
-                    console.log('trying');
-                    EverypayButton.jsonInit(EVERYPAY_DATA, $('#payment-card-form'));
+                    EverypayButton.jsonInit(EVERYPAY_DATA, '#payment-card-form');
+                    document.getElementsByClassName('everypay-button')[0].click();
                     clearInterval(loadButton);
-                  } catch (err) { }
-                  $('.everypay-button').trigger('click');
-            }, 1000);
+                  } catch (err) { console.log(err)}
+            }, 100);
+
             ";
 
     $jsForm .= '</script>';
@@ -189,10 +189,6 @@ else {
     }
 
 echo <<<EOT
-    <script data-no-defer="" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script data-no-defer="" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="http://cscart.local/js/lib/jquery/jquery.min.js?ver=4.3.5"></script>
-    <script type="text/javascript" src="http://cscart.local/js/lib/jqueryui/jquery-ui.custom.min.js?ver=4.3.5"></script>
     {$jsButton}
     {$jsForm}
     {$html}
