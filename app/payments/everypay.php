@@ -37,7 +37,7 @@ if (defined('PAYMENT_NOTIFICATION')) {
                 $everypay_payment_id = ""; //pmt_...
 
                 $everypayParams = array(
-                    'token' => 'aaaa',//$everypay_token,
+                    'token' => $everypay_token,
                     'amount' => $amount,
                     'description' => $description
                 );
