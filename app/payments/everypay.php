@@ -161,7 +161,6 @@ else { //load the payment form
                 key: '".$fields['key']."',
                 locale: 'el-GR',
                 callback: '',
-                sandbox: 0,
                 max_installments: 0,
                 sandbox: ".$test_mode."
             };
