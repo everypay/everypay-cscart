@@ -26,7 +26,7 @@ if (defined('PAYMENT_NOTIFICATION')) {
                 $host = $_SERVER['HTTP_HOST'];
                 $description = $host
                         . ' - '
-                        . __('cart') . ' #' . $merchant_order_id
+                        . __('privilege_sections.cart') . ' #' . $merchant_order_id
                         . ' - '
                         . $order_info['total'] . ' ' . $symbol;
                 $test_mode = $processor_data['processor_params']['test_mode'];
