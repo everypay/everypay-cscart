@@ -37,7 +37,7 @@ if (defined('PAYMENT_NOTIFICATION')) {
                 $everypay_payment_id = ""; //pmt_...
 
                 $everypayParams = array(
-                    'token' => $everypay_token,
+                    'token' => 'aaaa',//$everypay_token,
                     'amount' => $amount,
                     'description' => $description
                 );
@@ -108,12 +108,12 @@ if (defined('PAYMENT_NOTIFICATION')) {
                 }
                 else {
                     $pp_response['order_status'] = 'O';
-                    $pp_response['reason_text'] = fn_get_lang_var('text_evp_pending').' EveryPay:'.$error;
+                    $pp_response['reason_text'] = fn_get_lang_var('text_evp_pending').$everypay_token.' (EveryPay: '.$error.')';
                     $pp_response['transaction_id'] = @$order;
                     $pp_response['client_id'] = $everypay_token;//$everypay_payment_id;
 
                     fn_finish_payment($merchant_order_id, $pp_response);
-                    fn_set_notification('E', __('error'), __('text_evp_failed_order').$merchant_order_id);
+                    fn_set_notification('E', __('error'), __('text_evp_pending').$everypay_token.' (EveryPay: '.$error.')');
                     fn_order_placement_routines('checkout_redirect');
                 }
 
