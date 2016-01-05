@@ -7,28 +7,34 @@ if ( !defined('AREA') ) { die('Access denied'); }
 
 // Return from payment
 if (defined('PAYMENT_NOTIFICATION')) {
-//print_r($_REQUEST);echo "<br/><br/>";
     if ($mode == 'return' && !empty($_REQUEST['merchant_order_id'])) {
-        //$view = Registry::get('view');
-        //$view->assign('order_action', __('placing_order'));
-        //$view->display('views/orders/components/placing_order.tpl');
-        //fn_flush();
+        $view = Registry::get('view');
+        $view->assign('order_action', __('placing_order'));
+        $view->display('views/orders/components/placing_order.tpl');
+        fn_flush();
 
-        $merchant_order_id = fn_rzp_place_order($_REQUEST['merchant_order_id']);
-        $everypay_token = $_REQUEST['everypayToken'];
+        $merchant_order_id = fn_evp_place_order($_REQUEST['merchant_order_id']);
+        $everypay_token = $_REQUEST['everypayToken']; //ctn_...
 
         if(!empty($merchant_order_id) and !empty($everypay_token)){
             if (fn_check_payment_script('everypay.php', $merchant_order_id, $processor_data)) {
                 $secret_key = $processor_data['processor_params']['secret_key'];
                 $order_info = fn_get_order_info($merchant_order_id);
-                $amount = fn_rzp_adjust_amount($order_info['total'], $processor_data['processor_params']['currency'])*100;
-                $description = "#".$merchant_order_id;
+                $amount_and_symbol = fn_evp_adjust_amount($order_info['total'], $processor_data['processor_params']['currency']);
+                $amount = $amount_and_symbol[0] * 100 ;
+                $symbol = $amount_and_symbol[1];
+                $host = $_SERVER['HTTP_HOST'];
+                $description = $host
+                        . ' - '
+                        . __('cart') . ' #' . $merchant_order_id
+                        . ' - '
+                        . $order_info['total'] . ' ' . $symbol;
                 $test_mode = $processor_data['processor_params']['test_mode'];
 
                 $pp_response = array();
                 $success = false;
                 $error = "";
-                $everypay_payment_id = "";
+                $everypay_payment_id = ""; //pmt_...
 
                 $everypayParams = array(
                     'token' => $everypay_token,
@@ -43,7 +49,6 @@ if (defined('PAYMENT_NOTIFICATION')) {
                     }else{
                         $url = 'https://api.everypay.gr/payments';
                     }
-                    //$field_description="description='".$description."'";
 
                     //cURL Request
                     $ch = curl_init();
@@ -59,17 +64,14 @@ if (defined('PAYMENT_NOTIFICATION')) {
                     //execute post
                     $result = curl_exec($ch);
                     $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//echo "curl: ";
-//print_r($result);
-//exit;
+
                     if($result === false) {
                         $success = false;
                         $error = 'Curl error: ' . curl_error($ch);
                     }
                     else {
                         $response_array = json_decode($result, true);
-//print_r($response_array);
-//exit;
+
                         //Check success response
                         if($http_status === 200 and isset($response_array['error']) === false){
                             $success = true;
@@ -98,19 +100,19 @@ if (defined('PAYMENT_NOTIFICATION')) {
                 if($success === true){
                     $pp_response['order_status'] = 'P';
                     $pp_response['reason_text'] = fn_get_lang_var('text_evp_success');
-                    $pp_response['transaction_id'] = $everypay_payment_id;//@$order;
+                    $pp_response['transaction_id'] = @$order;
                     $pp_response['client_id'] = $everypay_payment_id;
-//FIXME
+
                     fn_finish_payment($merchant_order_id, $pp_response);
                     fn_order_placement_routines('route', $merchant_order_id);
                 }
                 else {
                     $pp_response['order_status'] = 'O';
-                    $pp_response['reason_text'] = fn_get_lang_var('text_evp_pending').'EveryPay:'.$error;
-                    $pp_response['transaction_id'] = '';//@$order;
-                    $pp_response['client_id'] = '';//$everypay_payment_id;
-//print_r($pp_response);exit;
-                    //fn_finish_payment($merchant_order_id, $pp_response);
+                    $pp_response['reason_text'] = fn_get_lang_var('text_evp_pending').' EveryPay:'.$error;
+                    $pp_response['transaction_id'] = @$order;
+                    $pp_response['client_id'] = $everypay_token;//$everypay_payment_id;
+
+                    fn_finish_payment($merchant_order_id, $pp_response);
                     fn_set_notification('E', __('error'), __('text_evp_failed_order').$merchant_order_id);
                     fn_order_placement_routines('checkout_redirect');
                 }
@@ -126,13 +128,12 @@ if (defined('PAYMENT_NOTIFICATION')) {
 }
 else { //load the payment form
     $url = fn_url("payment_notification.return?payment=everypay", AREA, 'current');
-    //$checkout_url = "https://sandbox-button.everypay.gr/js/button.js";
     $urlButton = "https://button.everypay.gr/js/button.js";
     $test_mode = $processor_data['processor_params']['test_mode'];
 
     $fields = array(
         'key' => $processor_data['processor_params']['public_key'],
-        'amount' => fn_rzp_adjust_amount($order_info['total'], $processor_data['processor_params']['currency'])*100,
+        'amount' => fn_evp_adjust_amount($order_info['total'], $processor_data['processor_params']['currency'])[0]*100,
         'currency' => $processor_data['processor_params']['currency'],
         'description' => "Order# ".$order_id,
         'name' => Registry::get('settings.Company.company_name'),
@@ -141,11 +142,6 @@ else { //load the payment form
         'customer_phone' => $order_info['phone'],
         'order_id' => $order_id
     );
-
-    //$html = '<form name="everypay-form" id="razorpay-form" action="'.$url.'" target="_parent" method="POST">
-    //            <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" />
-    //            <input type="hidden" name="merchant_order_id" id="order_id" value="'.$fields['order_id'].'"/>
-    //        </form>';
 
     $html = '<form class="payment-card-form" method="POST" action="'.$url.'" target="_parent" id="payment-card-form">
                 <input type="hidden" name="merchant_order_id" id="order_id" value="'.$fields['order_id'].'"/>
@@ -159,9 +155,7 @@ else { //load the payment form
 
     $jsForm = '<script type="text/javascript">';
 
-    $jsForm .= "
-
-var EVERYPAY_DATA = {
+    $jsForm .= "var EVERYPAY_DATA = {
                 amount: '".$fields['amount']."',
                 description: 'Order# ".$fields['order_id']."',
                 key: '".$fields['key']."',
@@ -178,7 +172,6 @@ var EVERYPAY_DATA = {
                     clearInterval(loadButton);
                   } catch (err) { console.log(err)}
             }, 100);
-
             ";
 
     $jsForm .= '</script>';

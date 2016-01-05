@@ -3,22 +3,24 @@ use Tygh\Registry;
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
-function fn_rzp_adjust_amount($price, $payment_currency)
+function fn_evp_adjust_amount($price, $payment_currency)
 {
     $currencies = Registry::get('currencies');
+    $symbol = ENV['CART_PRIMARY_CURRENCY'];
 
     if (array_key_exists($payment_currency, $currencies)) {
         if ($currencies[$payment_currency]['is_primary'] != 'Y') {
             $price = fn_format_price($price / $currencies[$payment_currency]['coefficient']);
         }
+        $symbol = $currencies[$payment_currency]['symbol'];
     } else {
         return false;
     }
 
-    return $price;
+    return array($price, $symbol);
 }
 
-function fn_rzp_place_order($original_order_id)
+function fn_evp_place_order($original_order_id)
 {
     $cart = & $_SESSION['cart'];
     $auth = & $_SESSION['auth'];
