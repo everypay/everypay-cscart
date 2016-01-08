@@ -152,7 +152,6 @@ else { //load the payment form
     if (1 == $test_mode){
         $html .= '<p style="text-align:right;"><strong style="color: #ff0000">'.__("test_mode").'</strong></p>';
     }
-    $html .= '<p style="text-align:right;"><strong style="color: #ff0000">installments: '.$installments.'</p>';
     $html  .= '</form>';
 
     $jsButton = '<script type="text/javascript" src="https://button.everypay.gr/js/button.js"></script>';
