@@ -33,6 +33,12 @@ design/backend/templates/views/payments/components/*
 !design/backend/templates/views/payments/components/cc_processors/
 design/backend/templates/views/payments/components/cc_processors/*
 
+!js/
+js/*
+
+!js/everypay
+!js/everypay/*
+
 #all filenames containing string 'everypay' in the above 2 directories
 !**/*everypay*
 

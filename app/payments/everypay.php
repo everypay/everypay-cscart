@@ -30,7 +30,6 @@ if (defined('PAYMENT_NOTIFICATION')) {
                         . ' - '
                         . $order_info['total'] . ' ' . $symbol;
                 $test_mode = $processor_data['processor_params']['test_mode'];
-
                 $pp_response = array();
                 $success = false;
                 $error = "";
@@ -41,6 +40,9 @@ if (defined('PAYMENT_NOTIFICATION')) {
                     'amount' => $amount,
                     'description' => $description
                 );
+                if (false !== $max = getInstallments($amount, $processor_data['processor_params']['everypay_installments'])) {
+                    $everypayParams['max_installments'] = $max;
+                }
                 $query = http_build_query($everypayParams, null, '&');
 
                 try {
@@ -142,6 +144,7 @@ else { //load the payment form
         'customer_phone' => $order_info['phone'],
         'order_id' => $order_id
     );
+    $installments = getInstallments($fields['amount'], $processor_data['processor_params']['everypay_installments']);
 
     $html = '<form class="payment-card-form" method="POST" action="'.$url.'" target="_parent" id="payment-card-form">
                 <input type="hidden" name="merchant_order_id" id="order_id" value="'.$fields['order_id'].'"/>
@@ -149,6 +152,7 @@ else { //load the payment form
     if (1 == $test_mode){
         $html .= '<p style="text-align:right;"><strong style="color: #ff0000">'.__("test_mode").'</strong></p>';
     }
+    $html .= '<p style="text-align:right;"><strong style="color: #ff0000">installments: '.$installments.'</p>';
     $html  .= '</form>';
 
     $jsButton = '<script type="text/javascript" src="https://button.everypay.gr/js/button.js"></script>';
@@ -160,9 +164,9 @@ else { //load the payment form
                 description: 'Order# ".$fields['order_id']."',
                 key: '".$fields['key']."',
                 locale: 'el-GR',
-                callback: '',
-                max_installments: 0,
-                sandbox: ".$test_mode."
+                callback: '',"
+                .($installments !== false ? 'max_installments:'.$installments.',' : '')
+                ."sandbox: ".$test_mode."
             };
             var loadButton = setInterval(function () {
                   try {

@@ -43,3 +43,19 @@ function fn_evp_place_order($original_order_id)
 
     return $order_id;
 }
+
+function getInstallments($total, $ins)
+{
+    $inst = htmlspecialchars_decode($ins);//$processor_data['processor_params']['everypay_installments']);
+    if ($inst) {
+        $installments = json_decode($inst, true);
+        foreach ($installments as $i) {
+            if ($total >= $i['from'] && $total <= $i['to']) {
+                return $i['max'];
+            }
+        }
+    }
+
+
+    return false;
+}
