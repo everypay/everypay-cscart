@@ -6,11 +6,11 @@
 !app/
 app/*
 
-!app/payments/
-app/payments/*
+!app/addons/
+app/addons/*
 
-!app/payments/everypay
-!app/payments/everypay/*
+!app/addons/everypay/
+!app/addons/everypay/**
 
 !design/
 design/*
@@ -21,20 +21,22 @@ design/backend/*
 !design/backend/templates/
 design/backend/templates/*
 
-!design/backend/templates/views/
-design/backend/templates/views/*
+!design/backend/templates/addons/
+design/backend/templates/addons/*
 
-!design/backend/templates/views/payments/
-design/backend/templates/views/payments/*
+!design/backend/templates/addons/everypay/
+!design/backend/templates/addons/everypay/**
 
-!design/backend/templates/views/payments/components/
-design/backend/templates/views/payments/components/*
 
-!design/backend/templates/views/payments/components/cc_processors/
-design/backend/templates/views/payments/components/cc_processors/*
+!js/
+js/*
 
-#all filenames containing string 'everypay' in the above 2 directories
-!**/*everypay*
+!js/addons/
+js/addons/*
+
+!js/addons/everypay/
+!js/addons/everypay/**
+
 
 !.gitignore
 !README.md

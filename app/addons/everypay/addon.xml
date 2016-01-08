@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<addon scheme="3.0" edition_type="ROOT,ULT:VENDOR">
+    <id>everypay</id>
+    <version>1.0</version>
+    <default_language>en</default_language>
+    <priority>100500</priority>
+    <status>active</status>
+    <name>Everypay</name>
+    <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
+
+    <settings edition_type="ROOT,ULT:VENDOR">
+        <sections>
+            <section id="general">
+                <items>
+                    <item id="everypay_settings">
+                        <type>header</type>
+                    </item>
+                </items>
+            </section>
+        </sections>
+    </settings>
+
+    <queries>
+        <item type="file">database/data.sql</item>
+    </queries>
+    <functions>
+        <item for="uninstall">fn_everypay_delete_payment_processors</item>
+    </functions>
+</addon>

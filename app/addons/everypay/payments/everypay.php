@@ -155,7 +155,18 @@ else { //load the payment form
 
     $jsForm = '<script type="text/javascript">';
 
-    $jsForm .= "var EVERYPAY_DATA = {
+    $jsForm .= "
+        //alert( \"You are running jQuery version: \" + Tygh.$.fn.jquery );
+/*Tygh.$( document ).ready(function() {
+    console.log( \"ready!\" );
+});*/
+/*(function(_, $) {
+    var Tygh.$()
+
+}(Tygh, Tygh.$));*/
+
+/*
+var EVERYPAY_DATA = {
                 amount: '".$fields['amount']."',
                 description: 'Order# ".$fields['order_id']."',
                 key: '".$fields['key']."',
@@ -171,6 +182,7 @@ else { //load the payment form
                     clearInterval(loadButton);
                   } catch (err) { console.log(err)}
             }, 100);
+            */
             ";
 
     $jsForm .= '</script>';
