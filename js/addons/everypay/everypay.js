@@ -13,7 +13,7 @@
         eventer(messageEvent, function (e) {
             var key = e.message ? "message" : "data";
             var data = e[key];
-            console.log(data);
+            //console.log(data);
             var myData = data.split("init_everypay:");
             if (myData.length == 2) {
                 init_button(myData[1]);
@@ -24,7 +24,7 @@
     });
     
     function add_everypay_css(){
-        var my_css = '.payments-form .everypay-button {float: right;font-size: 1.3em !important;margin: 21px;padding: 15px 20px !important;}';
+        var my_css = '.payments-form .everypay-button {float: right;font-size: 1.3em !important;margin: 21px;padding: 15px 20px !important}';
         var head = document.head || document.getElementsByTagName('head')[0];
         var my_style = document.createElement('style');
 
@@ -37,13 +37,24 @@
 
         head.appendChild(my_style);
     }
-
+    
     function init_button(INIT_DATA) {
         add_everypay_scripts();
         var $form = Tygh.$('.payments-form');
         var $iframe = $form.find('iframe');
         var $iframe_wrapper = $form.find('.ty-payment-method-iframe__box');
-
+        
+        /*
+        Tygh.$($form).bind('submit', function (){
+            alert(1);
+             if (Tygh.$('.everypay-button.disabled').length){
+                 alert(2);
+                Tygh.$('.everypay-button.disabled')
+                    .after('<div class="ep-loading" style="float: right;font-size:1.2em;\n\
+                    margin-top: 20px;">Processing. Please wait...</div>');
+            }
+        })*/
+        
         var loadButton = setInterval(function () {
             try {
                 $iframe.hide();
@@ -52,9 +63,9 @@
                 EverypayButton.jsonInit(DATA, $form);
                 clearInterval(loadButton);
             } catch (err) {
-                console.log(err);
+                //console.log(err);
             }
-        }, 201);
+        }, 301);
     }
     
     var ADDED_BUTTON_JS = false;

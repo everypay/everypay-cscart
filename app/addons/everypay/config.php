@@ -17,6 +17,3 @@ if (!defined('BOOTSTRAP')) { die('Access denied'); }
 //
 // Defined variables
 //
-
-//define('MAX_PAYPAL_PRODUCTS', 100);
-//define('MAX_PAYPAL_DESCR_LENGTH', 126);

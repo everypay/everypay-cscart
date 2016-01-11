@@ -27,7 +27,6 @@ design/backend/templates/addons/*
 !design/backend/templates/addons/everypay/
 !design/backend/templates/addons/everypay/**
 
-
 !js/
 js/*
 
