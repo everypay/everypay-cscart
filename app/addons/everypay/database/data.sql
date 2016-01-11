@@ -1,6 +1,6 @@
 DELETE FROM ?:payment_processors WHERE addon = 'everypay';
 REPLACE INTO ?:payment_processors (`processor`,`processor_script`,`processor_template`,`admin_template`,`callback`,`type`,`addon`) 
-VALUES ('Everypay','everypay.php', 'views/orders/components/payments/everypay.tpl','everypay.tpl', 'Y', 'P', 'everypay');
+VALUES ('Everypay','everypay.php', 'views/orders/components/payments/cc_outside.tpl','everypay.tpl', 'Y', 'P', 'everypay');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('EN','public_key','Public Key');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('EN','secret_key','Private Key');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('EN','test_mode','Test Mode');
