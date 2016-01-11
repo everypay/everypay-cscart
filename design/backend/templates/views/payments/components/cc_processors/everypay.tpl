@@ -43,17 +43,15 @@
     <input type="text" name="payment_data[processor_params][everypay_installments]" id="everypay-installments" value="{$processor_params.everypay_installments}" class="input-text" />
 </div>
 
-<script type="text/x-tmpl-mustache" id="installment-row">
-{literal}
+<div id="installment-row" style="display:none">
 <tr data-id="{{id}}">
     <td><input type="text" name="amount_{{id}}_from" value="{{from}}" class="form-control" /></td>
     <td><input type="text" name="amount_{{id}}_to" value="{{to}}" class="form-control" /></td>
     <td><input type="text" name="max_{{id}}" value="{{max}}" class="form-control" /></td>
     <td><a class="btn btn-danger remove-installment" href="#"><i class="fa fa-minus-circle"></i></a></td>
 </tr>
-{/literal}
-</script>
-<script type="text/x-tmpl-mustache" id="installment-table"></script>
+</div>
+<div id="installment-table" style="display:none">
 <table class="table">
     <thead>
         <tr>
@@ -65,3 +63,4 @@
     </thead>
     <tbody></tbody>
 </table>
+</div>

@@ -1,8 +1,12 @@
 var installments = [];
+var row = '<tr data-id="{{id}}">'
+    +'<td><input type="text" name="amount_{{id}}_from" value="{{from}}" class="form-control" /></td>'
+    +'<td><input type="text" name="amount_{{id}}_to" value="{{to}}" class="form-control" /></td>'
+    +'<td><input type="text" name="max_{{id}}" value="{{max}}" class="form-control" /></td>'
+    +'<td><a class="btn btn-danger remove-installment" href="#"><i class="fa fa-minus-circle"></i></a></td>'
+    +'</tr>';
 $(function() {
-    console.log("installments.js loaded all right");
     var table = Tygh.$('#installment-table').html();
-    console.log(table);
     Mustache.parse(table);
     var renderedTable = Mustache.render(table, {});
     $('#installments').html(renderedTable);
@@ -17,7 +21,7 @@ $(function() {
         e.preventDefault();
         var maxRows = maxElementIndex();
 
-        var row = $('#installment-row').html();
+        //var row = $('#installment-row').html();
         Mustache.parse(row);
         var element = {id: maxRows, from: 0, to: 100, max: 12};
         var renderedRow = Mustache.render(row, element);
@@ -90,7 +94,7 @@ var maxElementIndex = function (row) {
 }
 
 var createElements = function () {
-    var row = $('#installment-row').html();
+    //var row = $('#installment-row').html();
     Mustache.parse(row);
     for (var i = 0, l = installments.length; i < l; i++) {
         var element = installments[i];
