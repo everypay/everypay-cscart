@@ -6,47 +6,36 @@ var row = "<tr data-id=\"{{id}}\">"
 +"<td><a class=\"btn btn-danger remove-installment\" href=\"#\"><i class=\"fa fa-minus-circle\"></i></a></td>"
 +"</tr>";
 $(function() {
-    //console.log("installments.js loaded all right 27");
-    var table = Tygh.$('#installment-table').html();
-    //console.log(table);
+    var table = $('#installment-table').html();
     Mustache.parse(table);
     var renderedTable = Mustache.render(table, {});
-    Tygh.$('#installments').html(renderedTable);
+    $('#installments').html(renderedTable);
 
     var input = $('#everypay-installments').val();
     if (input) {
-        //alert(input);
+        console.log(input);
         installments = JSON.parse(input);
         createElements();
     }
 
-    Tygh.$('#add-installment').click(function (e) {
+    $('#add-installment').click(function (e) {
         e.preventDefault();
         var maxRows = maxElementIndex();
 
-        //var row = Tygh.$('#installment-row').html();
-        //var row = "<tr data-id=\"{{id}}\">"
-//+"<td><input type=\"text\" name=\"amount_{{id}}_from\" value=\"{{from}}\" class=\"form-control\" /></td>"
-//+"<td><input type=\"text\" name=\"amount_{{id}}_to\" value=\"{{to}}\" class=\"form-control\" /></td>"
-//+"<td><input type=\"text\" name=\"max_{{id}}\" value=\"{{max}}\" class=\"form-control\" /></td>"
-//+"<td><a class=\"btn btn-danger remove-installment\" href=\"#\"><i class=\"fa fa-minus-circle\"></i></a></td>"
-//+"</tr>";
-        //console.log(row);
         Mustache.parse(row);
         var element = {id: maxRows, from: 0, to: 100, max: 12};
         var renderedRow = Mustache.render(row, element);
-        $row = Tygh.$(renderedRow);
+        $row = $(renderedRow);
         addInstallment($row);
         $row.find('input').change(function (e){
-            //console.log("hey<br/>");
-            addInstallment(Tygh.$(this).parent().parent());
+            addInstallment($(this).parent().parent());
         });
-        //console.log("go on");
-        Tygh.$('#installments table tbody').append($row);
+
+        $('#installments table tbody').append($row);
         $row.find('.remove-installment').click(function (e){
             e.preventDefault();
-            removeInstallment(Tygh.$(this).parent().parent());
-            Tygh.$(this).parent().parent().remove();
+            removeInstallment($(this).parent().parent());
+            $(this).parent().parent().remove();
         });
     });
 });
@@ -65,7 +54,7 @@ var addInstallment = function (row) {
     } else {
         installments.push(element);
     }
-    Tygh.$('#everypay-installments').val(JSON.stringify(installments));
+    $('#everypay-installments').val(JSON.stringify(installments));
 };
 
 var removeInstallment = function (row) {
@@ -80,7 +69,7 @@ var removeInstallment = function (row) {
     if (false !== index) {
         installments.splice(index, 1);
     }
-    Tygh.$('#everypay-installments').val(JSON.stringify(installments));
+    $('#everypay-installments').val(JSON.stringify(installments));
 };
 
 var elementExists = function (id) {
@@ -106,20 +95,19 @@ var maxElementIndex = function (row) {
 }
 
 var createElements = function () {
-    //var row = Tygh.$('#installment-row').html();
     Mustache.parse(row);
     for (var i = 0, l = installments.length; i < l; i++) {
         var element = installments[i];
         var renderedRow = Mustache.render(row, element);
-        $row = Tygh.$(renderedRow);
+        $row = $(renderedRow);
         $row.find('input').change(function (e){
             addInstallment($(this).parent().parent());
         });
-        Tygh.$('#installments table tbody').append($row);
+        $('#installments table tbody').append($row);
         $row.find('.remove-installment').click(function (e){
             e.preventDefault();
-            removeInstallment(Tygh.$(this).parent().parent());
-            Tygh.$(this).parent().parent().remove();
+            removeInstallment($(this).parent().parent());
+            $(this).parent().parent().remove();
         });
     }
 }
