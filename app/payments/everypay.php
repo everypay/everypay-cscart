@@ -144,7 +144,7 @@ else { //load the payment form
         'customer_phone' => $order_info['phone'],
         'order_id' => $order_id
     );
-    $installments = getInstallments($fields['amount'], $processor_data['processor_params']['everypay_installments']);
+    $installments = getInstallments($order_info['total'], $processor_data['processor_params']['everypay_installments']);
 
     $html = '<form class="payment-card-form" method="POST" action="'.$url.'" target="_parent" id="payment-card-form">
                 <input type="hidden" name="merchant_order_id" id="order_id" value="'.$fields['order_id'].'"/>
@@ -152,6 +152,7 @@ else { //load the payment form
     if (1 == $test_mode){
         $html .= '<p style="text-align:right;"><strong style="color: #ff0000">'.__("test_mode").'</strong></p>';
     }
+
     $html  .= '</form>';
 
     $jsButton = '<script type="text/javascript" src="https://button.everypay.gr/js/button.js"></script>';
