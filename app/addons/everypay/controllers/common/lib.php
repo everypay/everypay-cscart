@@ -121,7 +121,7 @@ function fn_send_everypay_payment()
                 $response['order_status'] = 'P';
                 $response['reason_text'] = fn_get_lang_var('text_evp_success');
                 $response['transaction_id'] = @$order;
-                $response['client_id'] = $everypay_payment_id;
+                $response['client_id'] = $everypay_token;
                 fn_finish_payment($merchant_order_id, $response);
                 fn_order_placement_routines('route', $merchant_order_id);
             } else {

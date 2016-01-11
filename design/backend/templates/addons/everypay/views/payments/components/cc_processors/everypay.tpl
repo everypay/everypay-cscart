@@ -33,12 +33,5 @@
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label" for="iframe_mode_{$payment_id}">{__("iframe_mode")}:</label>
-    <div class="controls">
-        <select name="payment_data[processor_params][iframe_mode]" id="iframe_mode_{$payment_id}">
-            <option value="Y" {if $processor_params.iframe_mode == "Y"}selected="selected"{/if}>{__("enabled")}</option>
-            <option value="N" {if $processor_params.iframe_mode == "N"}selected="selected"{/if}>{__("disabled")}</option>
-        </select>
-    </div>
-</div>
+<!-- Force iframe mode -->
+<input type="hidden" name="payment_data[processor_params][iframe_mode]" value="Y">

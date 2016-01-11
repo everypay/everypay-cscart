@@ -7,17 +7,21 @@ This is the EveryPay payment gateway plugin for CS Cart. Allows merchants to acc
 
 ## Installation
 1. Ensure you have latest version of CS Cart installed.
-2. Download the zip of this repo.
-3. Inside the file downloaded above is a file called 'install.everypay.sql'. This has to be executed against your cscart database. You can use phpmyadmin to import the file into your cscart database or copy paste the content and run directly into your mysql shell.
-4. Upload rest of the contents of the plugin to your CS Cart Installation directory (content of app folder goes in app folder, content of design folder in design folder).
+2. Download the zip of this repository (https://github.com/everypay/everypay-cscart/archive/master.zip).
+3. Extract to a local folder
+4. Go inside the extraction folder and add folders app, design and js in a new zip file called everypay.zip or something similar
+5. Navigate to CS cart admin menu Addons > Manage Addons.
+6. Choose add new addon and upload the zip file
+
+Now the addon show be active. If not activate it manually.
 
 ## Configuration
 
-1. Log into CS-Cart as administrator (http://cscart_installation/admin.php). Navigate to Administration / Payment Methods.
+1. Navigate to Administration / Payment Methods.
 2. Click the "+" to add a new payment method.
-3. Choose EveryPay from the list and then click save. For template, choose "cc_outside.tpl"
+3. Choose EveryPay from the list and choose "cc_outside.tpl" in the template filed
 4. Click the 'Configure' tab.
-5. Enter your EveryPay Key ID and Key Secret which you can get from EveryPay Dashboard.
+5. Enter your Public Key, Private Key, and choose the test mode (Test or not). You can find these in your settings menu (https://dashboard.everypay.gr/settings/api-keys)
 6. Click 'Save'
 
 ### Support
