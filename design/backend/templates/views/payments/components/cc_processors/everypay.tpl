@@ -1,7 +1,8 @@
 {* $Id$ *}
 
-{script src="js/everypay/installments.js"}
+{script src="js/lib/jquery/jquery.min.js"}
 {script src="js/everypay/mustache.min.js"}
+{script src="js/everypay/installments.js"}
 
 <div class="form-field">
     <label for="public_key">{__("public_key")}:</label>
@@ -38,29 +39,30 @@
 
 <div class="form-field">
     <label for="everypay-installments">{__("installments")}:</label>
-    <div class="col-sm-10" id="installments">
-    </div>
-    <input type="text" name="payment_data[processor_params][everypay_installments]" id="everypay-installments" value="{$processor_params.everypay_installments}" class="input-text" />
+    <div class="col-sm-10" id="installments"></div>
+    <input type="text" name="payment_data[processor_params][everypay_installments]" id="everypay-installments" value="{$processor_params.everypay_installments}" class="input-text" style="display:none" />
 </div>
 
+
 <div id="installment-row" style="display:none">
-<tr data-id="{{id}}">
-    <td><input type="text" name="amount_{{id}}_from" value="{{from}}" class="form-control" /></td>
-    <td><input type="text" name="amount_{{id}}_to" value="{{to}}" class="form-control" /></td>
-    <td><input type="text" name="max_{{id}}" value="{{max}}" class="form-control" /></td>
-    <td><a class="btn btn-danger remove-installment" href="#"><i class="fa fa-minus-circle"></i></a></td>
+<tr data-id="{literal}{{id}}{/literal}">
+<td><input type="text" name="amount_{literal}{{id}}{/literal}_from" value="{literal}{{from}}{/literal}" class="form-control" /></td>
+<td><input type="text" name="amount_{literal}{{id}}{/literal}_to" value="{literal}{{to}}{/literal}" class="form-control" /></td>
+<td><input type="text" name="max_{literal}{{id}}{/literal}" value="{literal}{{max}}{/literal}" class="form-control" /></td>
+<td><a class="btn btn-danger remove-installment" href="#"><i class="fa fa-minus-circle"></i></a></td>
 </tr>
 </div>
+
 <div id="installment-table" style="display:none">
-<table class="table">
-    <thead>
-        <tr>
-            <th>{__("from")}</th>
-            <th>{__("to")}</th>
-            <th>{__("number")}</th>
-            <th><a class="btn btn-success" href="#" id="add-installment"><i class="fa fa-plus-circle"></i></a></th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{__("from")}</th>
+                <th>{__("to")}</th>
+                <th>{__("number")}</th>
+                <th><a class="btn btn-success" href="#" id="add-installment"><i class="fa fa-plus-circle"></i></a></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </div>
