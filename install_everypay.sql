@@ -2,7 +2,7 @@ REPLACE INTO cscart_payment_processors (`processor`,`processor_script`,`processo
 REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EN','public_key','Public Key');
 REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EN','secret_key','Private Key');
 REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EN','test_mode','Test Mode');
-REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EL','installments','Installments');
+REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EN','installments','Installments');
 REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EN','text_evp_failed_order','No response from Everypay has been received. Please contact the store staff and tell them the order ID:');
 REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EN','text_evp_pending','Payment failed! Please check EveryPay dashboard using Payment Token ');
 REPLACE INTO cscart_language_values (`lang_code`,`name`,`value`) VALUES ('EN','text_evp_success','Payment Sucessful. You can check the payment under Payments on Everypay dashboard. ');
