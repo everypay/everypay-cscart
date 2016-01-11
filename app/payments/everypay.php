@@ -40,7 +40,7 @@ if (defined('PAYMENT_NOTIFICATION')) {
                     'amount' => $amount,
                     'description' => $description
                 );
-                if (false !== $max = getInstallments($amount, $processor_data['processor_params']['everypay_installments'])) {
+                if (false !== $max = getInstallments($order_info['total'], $processor_data['processor_params']['everypay_installments'])) {
                     $everypayParams['max_installments'] = $max;
                 }
                 $query = http_build_query($everypayParams, null, '&');
