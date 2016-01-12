@@ -15,6 +15,10 @@
                     <item id="everypay_settings">
                         <type>header</type>
                     </item>
+                    <item id="paypal_status_map_settings">
+                        <type>template</type>
+                        <default_value>settings.tpl</default_value>
+                    </item>
                 </items>
             </section>
         </sections>

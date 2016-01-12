@@ -71,7 +71,12 @@ function fn_send_everypay_payment()
                 'description' => $description,
                 'payee_email' => $order_info['email'],
                 'payee_phone' => $order_info['phone'],
-            );            
+            );
+            
+            if (false !== $max = fn_everypay_get_installments($order_info['total'], 
+                $processor_data['processor_params']['everypay_installments'])) {
+                    $everypayParams['max_installments'] = $max;
+            }
 
             $response = array();
             $success = false;
@@ -140,4 +145,25 @@ function fn_send_everypay_payment()
     }
 
     exit;
+}
+
+function fn_everypay_get_installments($total, $ins)
+{
+    $inst = htmlspecialchars_decode($ins);
+    if ($inst) {
+        $installments = json_decode($inst, true);
+        $counter = 1;
+        foreach ($installments as $i) {
+           // return $i['max'];
+            
+            if (
+                ($total >= $i['from'] && $total <= $i['to']) || 
+                ($counter == (count($installments)) && $total >= $i['to']) 
+                ) {
+                return $i['max'];
+            }
+            $counter++;
+        }
+    }
+    return false;
 }
