@@ -34,7 +34,7 @@
 </div>
 
 <div class="control-group">
-    <label class="control-label" for="everypay-installments">{__("Installments_everypay")}:</label>
+    <label class="control-label" for="everypay-installments">{__("installments")}:</label>
     <div class="controls">
         <div id="installments"></div>
         <input type="hidden" name="payment_data[processor_params][everypay_installments]" id="everypay-installments" value="{$processor_params.everypay_installments}"/>
@@ -47,10 +47,10 @@
             <tr>
                 <th>{__("From (€)")}</th>
                 <th>{__("To (€)")}</th>
-                <th>{__("Installments")}</th>
+                <th>{__("installments")}</th>
                 <th>
                     <a class="btn btn-default" href="#" id="add-installment" style="width:101px;">                        
-                        <i class="icon icon-plus-sign"></i> {__("Add")}
+                        <i class="icon icon-plus-sign"></i> {__("add")}
                     </a>
                 </th>
             </tr>
@@ -73,54 +73,59 @@
     <script type="text/javascript">{literal}
         var installments = [];
         var row = "<tr data-id=\"{{id}}\">"
-                + "<td><input type=\"number\" name=\"amount_{{id}}_from\" value=\"{{from}}\" class=\"form-control\" /></td>"
-                + "<td><input type=\"number\" name=\"amount_{{id}}_to\" value=\"{{to}}\" class=\"form-control\" /></td>"
-                + "<td><input type=\"number\" name=\"max_{{id}}\" value=\"{{max}}\" class=\"form-control\" /></td>"
+                + "<td><input type=\"number\" step=\"0.01\" min=\"0\" name=\"amount_{{id}}_from\" value=\"{{from}}\" class=\"form-control\" /></td>"
+                + "<td><input type=\"number\" step=\"0.01\" min=\"0\" name=\"amount_{{id}}_to\" value=\"{{to}}\" class=\"form-control\" /></td>"
+                + "<td><input type=\"number\" step=\"1\" max=\"72\" min=\"0\" name=\"max_{{id}}\" value=\"{{max}}\" class=\"form-control\" /></td>"
                 + "<td><a class=\"btn btn-danger remove-installment\" href=\"#\"><i class=\"icon-trash\"></i></a></td>"
                 + "</tr>";
 
-        $(setTimeout(function () {
-            var table = $('#installment-table').html();
-            Mustache.parse(table);
-            var renderedTable = Mustache.render(table, {});
-            $('#installments').html(renderedTable);
+        var loadButton = setInterval(function () {
+            try {
+                var table = $('#installment-table').html();
+                Mustache.parse(table);
+                var renderedTable = Mustache.render(table, {});
+                $('#installments').html(renderedTable);
 
-            var input = $('#everypay-installments').val();
-            if (input) {
-                //console.log(input);
-                installments = JSON.parse(input);
-                createElements();
-            }
+                var input = $('#everypay-installments').val();
+                if (input) {
+                    //console.log(input);
+                    installments = JSON.parse(input);
+                    createElements();
+                }
 
-            $('#add-installment').click(function (e) {
-                e.preventDefault();
-                var maxRows = maxElementIndex();
-
-                Mustache.parse(row);
-                var element = {id: maxRows, from: 0, to: 100, max: 12};
-                var renderedRow = Mustache.render(row, element);
-                $row = $(renderedRow);
-
-                var max = findMaxAmount();
-
-                $row.find("input[name$='from']").val(max.toFixed(2))
-                $row.find("input[name$='to']").val((max + 49.99).toFixed(2))
-
-                addInstallment($row);
-
-                $row.find('input').change(function (e) {
-                    addInstallment($(this).parent().parent());
-                });
-
-                $('#installments table tbody').append($row);
-                $row.find('.remove-installment').click(function (e) {
+                $('#add-installment').click(function (e) {
                     e.preventDefault();
-                    removeInstallment($(this).parent().parent());
-                    $(this).parent().parent().remove();
-                });
-            });
-        }, 3000));
+                    var maxRows = maxElementIndex();
 
+                    Mustache.parse(row);
+                    var element = {id: maxRows, from: 0, to: 100, max: 12};
+                    var renderedRow = Mustache.render(row, element);
+                    $row = $(renderedRow);
+
+                    var max = findMaxAmount();
+
+                    $row.find("input[name$='from']").val((max + 0.01).toFixed(2))
+                    $row.find("input[name$='to']").val((parseInt(max.toFixed(0)) + 50).toFixed(2))
+
+                    addInstallment($row);
+
+                    $row.find('input').change(function (e) {
+                        addInstallment($(this).parent().parent());
+                    });
+
+                    $('#installments table tbody').append($row);
+                    $row.find('.remove-installment').click(function (e) {
+                        e.preventDefault();
+                        removeInstallment($(this).parent().parent());
+                        $(this).parent().parent().remove();
+                    });
+                });
+                clearInterval(loadButton);
+            } catch (err) {
+                //console.log(err);
+            }
+        }, 500);
+        
         var addInstallment = function (row) {
             var element = {
                 id: row.attr('data-id'),
@@ -183,7 +188,7 @@
                 }
             }
 
-            return max ? (max + 0.01) : 0;
+            return max;
         }
 
 
@@ -205,5 +210,5 @@
                 });
             }
         }
-{/literal}
-    </script>
+        {/literal}
+        </script>

@@ -31,9 +31,6 @@ function fn_everypay_prepare_checkout_payment_methods($cart)
             $cart['payment_method_data']['processor_params']['everypay_installments']);
         
         $jsonInit['max_installments'] = $max_installments ? : 0;
-        
-       
-
         $response = '<script type="text/javascript">parent.postMessage(\'init_everypay:'
             . json_encode($jsonInit) . '\',"*");</script>';
 

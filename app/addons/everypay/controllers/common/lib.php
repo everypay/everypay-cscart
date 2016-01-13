@@ -153,13 +153,19 @@ function fn_everypay_get_installments($total, $ins)
     if ($inst) {
         $installments = json_decode($inst, true);
         $counter = 1;
-        foreach ($installments as $i) {
-           // return $i['max'];
+        $max = 0;
+        $max_installments = 0; 
+        foreach ($installments as $i) {           
+            if ($i['to'] > $max){
+                $max = $i['to'];
+                $max_installments = $i['max'];
+            }
             
-            if (
-                ($total >= $i['from'] && $total <= $i['to']) || 
-                ($counter == (count($installments)) && $total >= $i['to']) 
-                ) {
+            if(($counter == (count($installments)) && $total >= $max)){
+                return $max_installments;
+            }
+            
+            if ($total >= $i['from'] && $total <= $i['to']) {
                 return $i['max'];
             }
             $counter++;

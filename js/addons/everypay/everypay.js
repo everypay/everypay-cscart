@@ -59,7 +59,7 @@
             try {
                 $iframe.hide();
                 $iframe_wrapper.hide();
-                var DATA = Tygh.$.parseJSON(INIT_DATA);                
+                var DATA = Tygh.$.parseJSON(INIT_DATA);           
                 EverypayButton.jsonInit(DATA, $form);
                 clearInterval(loadButton);
             } catch (err) {
