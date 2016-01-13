@@ -22,7 +22,8 @@ Now the addon show be active. If not activate it manually.
 3. Choose EveryPay from the list and choose "cc_outside.tpl" in the template filed
 4. Click the 'Configure' tab.
 5. Enter your Public Key, Private Key, and choose the test mode (Test or not). You can find these in your settings menu (https://dashboard.everypay.gr/settings/api-keys)
-6. Click 'Save'
+6. Enter your desired installment ranges, e.g. [0->100:2 installments], [100->500 : 5 installments], etc.
+7. Click 'Save'
 
 ### Support
 

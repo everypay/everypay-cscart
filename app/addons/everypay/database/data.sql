@@ -1,4 +1,4 @@
-DelETE FROM ?:payment_processors WHERE addon = 'everypay';
+DElETE FROM ?:payment_processors WHERE addon = 'everypay';
 REPLACE INTO ?:payment_processors (`processor`,`processor_script`,`processor_template`,`admin_template`,`callback`,`type`,`addon`) 
 VALUES ('Everypay','everypay.php', 'views/orders/components/payments/cc_outside.tpl','everypay.tpl', 'Y', 'P', 'everypay');
 
