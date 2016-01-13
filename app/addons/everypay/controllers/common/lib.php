@@ -58,7 +58,7 @@ function fn_send_everypay_payment()
                 . ' - '
                 . __('privilege_sections.cart') . ' #' . $merchant_order_id
                 . ' - '
-                . $order_info['total'] . ' ' . $amount['symbol'];
+                . $amount['price'] . ' ' . $amount['symbol'];
 
             $test_mode = $processor_data['processor_params']['test_mode'];
 
@@ -73,7 +73,7 @@ function fn_send_everypay_payment()
                 'payee_phone' => $order_info['phone'],
             );
             
-            if (false !== $max = fn_everypay_get_installments($order_info['total'], 
+            if (false !== $max = fn_everypay_get_installments($amount['price'], 
                 $processor_data['processor_params']['everypay_installments'])) {
                     $everypayParams['max_installments'] = $max;
             }
