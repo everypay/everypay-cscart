@@ -44,17 +44,6 @@
         var $iframe = $form.find('iframe');
         var $iframe_wrapper = $form.find('.ty-payment-method-iframe__box');
         
-        /*
-        Tygh.$($form).bind('submit', function (){
-            alert(1);
-             if (Tygh.$('.everypay-button.disabled').length){
-                 alert(2);
-                Tygh.$('.everypay-button.disabled')
-                    .after('<div class="ep-loading" style="float: right;font-size:1.2em;\n\
-                    margin-top: 20px;">Processing. Please wait...</div>');
-            }
-        })*/
-        
         var loadButton = setInterval(function () {
             try {
                 $iframe.hide();
