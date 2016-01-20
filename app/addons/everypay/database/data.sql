@@ -18,7 +18,7 @@ REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','public
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','secret_key','Ιδιωτικό Κλειδί');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','test_mode','Δοκιμαστική Λειτουργία');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_failed_order','Καμία απάντηση από την Everypay. Παρακαλώ επικοινωνήστε με τα κεντρικά γραφεία της εταιρείας και δώστε τους τον κωδικό παραγγελίας: ');
-REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_pending','Η συναλλαγή απέτυχε! Παρακαλώ ελέγξτε την πληρωμή στον λογαριαμό σας στο Everypay dashboard χρησιμοποιώντας τον κωδικό πληρωμής ');
+REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_pending','Η συναλλαγή απέτυχε! Παρακαλούμε βεβαιωθείτε οτι τα στοιχεία της κάρτας είναι σωστά και οτι η κάρτα αυτή έχει επαρκές υπόλοιπο.');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_success','Επιτυχής πληρωμή. Μπορείτε να ελέγξτε την πληρωμή στον λογαριαμό σας στο Everypay dashboard. ');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','From (€)','Από (€)');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','To (€)','Εως (€)');
