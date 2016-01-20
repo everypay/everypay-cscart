@@ -37,7 +37,6 @@
             }
         }, 301);
     }
-
     
     function add_everypay_scripts() {
         if (Tygh.$('#everypay-javascript').length){
@@ -50,7 +49,6 @@
         $btn_script.src = 'https://button.everypay.gr/js/button.js';
         head.appendChild($btn_script);
     }
-
     init_button(EVERYPAY_DATA);
 }(Tygh, Tygh.$));
 
