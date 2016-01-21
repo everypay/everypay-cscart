@@ -21,7 +21,7 @@
         add_everypay_scripts();
         add_everypay_css();
         
-        var $form = Tygh.$('.payments-form');
+        var $form = Tygh.$('.payments-form:visible');
         var $iframe = $form.find('iframe');
         $form.append('<input type="hidden" value="1" name="dispatch[checkout.place_order]">');
         var $iframe_wrapper = $form.find('.ty-payment-method-iframe__box');
