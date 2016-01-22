@@ -111,7 +111,7 @@ function fn_everypay_send_payment()
                         if (!empty($response_array['error']['code'])) {
                             $error = $response_array['error']['code'] . ":" . $response_array['error']['message'];
                         } else {
-                            $error = "EVERYPAY_ERROR:Invalid Response <br/>" . $result;
+                            $error = "ERROR :Invalid Response <br/>" . $result;
                         }
                     }
                 }
@@ -119,9 +119,9 @@ function fn_everypay_send_payment()
                 curl_close($curl);
             } catch (Exception $e) {
                 $success = false;
-                $error = "CSCART_ERROR:Request to Everypay Failed";
+                $error = "CSCART_ERROR:Request to Payment Gateway Failed";
             }
-
+                        
             if ($success === true) {
                 $response['order_status'] = 'P';
                 $response['reason_text'] = fn_get_lang_var('text_evp_success');
@@ -130,11 +130,6 @@ function fn_everypay_send_payment()
                 fn_finish_payment($merchant_order_id, $response);
                 fn_order_placement_routines('route', $merchant_order_id);
             } else {
-                $response['order_status'] = 'O';
-                $response['reason_text'] = fn_get_lang_var('text_evp_pending') . $everypay_token . ' (EveryPay: ' . $error . ')';
-                $response['transaction_id'] = @$order;
-                $response['client_id'] = $everypay_token; //$everypay_payment_id;
-                fn_finish_payment($merchant_order_id, $response);
                 fn_set_notification('E', __('error'), __('text_evp_pending') . $everypay_token . ' (EveryPay: ' . $error . ')');
                 fn_order_placement_routines('checkout_redirect');
             }
