@@ -130,7 +130,7 @@ function fn_everypay_send_payment()
                 fn_finish_payment($merchant_order_id, $response);
                 fn_order_placement_routines('route', $merchant_order_id);
             } else {
-                fn_set_notification('E', __('error'), __('text_evp_pending') . $everypay_token . ' (EveryPay: ' . $error . ')');
+                fn_set_notification('E', __('error'), __('text_evp_pending') . ' (Error: ' . $error . ')');
                 fn_order_placement_routines('checkout_redirect');
             }
         }
