@@ -41,7 +41,8 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
         exit();
     }    
     
-    $processor_data = fn_get_processor_data($ev_id)['processor_params'];    
+    $processor_data = fn_get_processor_data($ev_id);
+    $processor_data = $processor_data['processor_params'];    
     
     $amount = fn_everypay_convert_amount($cart['total'], CART_PRIMARY_CURRENCY, $processor_data['currency']);
     
