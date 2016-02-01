@@ -22,14 +22,13 @@
         add_everypay_css();
         
         var $form = jQuery('.payments-form:visible');
-        var $iframe = $form.find('iframe');
+        var $iframe = $form.find("iframe[id^='order_iframe']");
         $form.append('<input type="hidden" value="1" name="dispatch[checkout.place_order]">');
-        var $iframe_wrapper = $form.find('.ty-payment-method-iframe__box');
 
         var loadButton = setInterval(function () {
             try {
                 $iframe.hide();
-                $iframe_wrapper.hide();
+                $iframe.parent().hide();
                 EverypayButton.jsonInit(INIT_DATA, $form);
                 clearInterval(loadButton);
             } catch (err) {
