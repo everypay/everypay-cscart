@@ -1,7 +1,7 @@
 <div id="text_paypal_status_map" class="in collapse">
     <h2>Configuration</h2>
     <p><ol>
-        <li>Navigate to <a href="{$smarty.server.HTTP_HOST}{$smarty.server.REQUEST_URI}&dispatch=payments.manage" target="_blank">Administration > Payment Methods.</a></li>
+        <li>Navigate to <a href="{$smarty.server.SCRIPT_NAME}?dispatch=payments.manage" target="_blank">Administration > Payment Methods.</a></li>
         <li>Click the "+" to add a new payment method.</li>
         <li>Choose EveryPay from the list and choose "cc_outside.tpl" in the template filed</li>
         <li>Click the 'Configure' tab.</li>
