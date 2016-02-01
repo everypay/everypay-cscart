@@ -59,9 +59,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
     $jsonInit['max_installments'] = $max_installments ? : 0;
     $time = time();
     $response = '<script type="text/javascript">parent.init' . $time . ' = function(data){'
-        . ' var element =  document.getElementById(\'everypay_added_script\');
-                     
-                var fileref = document.createElement("script")
+        . '     var fileref = document.createElement("script")
                 fileref.setAttribute("type","text/javascript")
                 fileref.setAttribute("id","everypay_added_script_'.$time.'")
                 fileref.setAttribute("src", "/js/addons/everypay/everypay.js");
