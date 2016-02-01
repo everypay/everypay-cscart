@@ -44,10 +44,10 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
     $processor_data = fn_get_processor_data($ev_id);
     $processor_data = $processor_data['processor_params'];    
     
-    $amount = fn_everypay_convert_amount($cart['total'], CART_PRIMARY_CURRENCY, $processor_data['currency']);
+    $amount = fn_everypay_convert_amount($cart['total'] + $cart['payment_surcharge'], CART_PRIMARY_CURRENCY, $processor_data['currency']);
     
     $jsonInit = array(
-        'amount'   => intval($amount['price'] * 100),
+        'amount'   => intval(strval($amount['price'] * 100)),
         'currency' => $processor_data['currency'],
         'key'      => $processor_data['public_key'],
         'locale'   => $cart['user_data']['lang_code'],

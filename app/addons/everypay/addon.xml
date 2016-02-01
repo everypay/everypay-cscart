@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <addon scheme="3.0" edition_type="ROOT,ULT:VENDOR">
     <id>everypay</id>
-    <version>1.01</version>
+    <version>1.13</version>
     <default_language>en</default_language>
     <priority>100500</priority>
     <status>active</status>

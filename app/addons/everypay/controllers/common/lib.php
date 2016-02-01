@@ -17,13 +17,8 @@ function fn_everypay_convert_amount($price, $from_currency, $to_currency)
     return array('price' => $price, 'symbol' => $symbol);
 }
 
-function fn_everypay_place_order()
-{
-    $cart = & $_SESSION['cart'];
-    $auth = & $_SESSION['auth'];    
-    
-    list($order_id) = fn_place_order($cart, $auth, 'save');
-    
+function fn_everypay_place_order($order_id)
+{   
     db_query("REPLACE INTO ?:order_data (order_id, type, data) VALUES (?i, 'S', ?i)", $order_id, TIME);
 
     return $order_id;
@@ -38,6 +33,9 @@ function fn_everypay_send_payment()
     $view->assign('order_action', __('placing_order'));
     $view->display('views/orders/components/placing_order.tpl');
     fn_flush();
+    
+    $merchant_order_id = $cart['processed_order_id'][0];
+    fn_everypay_place_order($merchant_order_id);
 
     if (!isset($_REQUEST['everypayToken']) || empty($_REQUEST['everypayToken'])) {
         fn_set_notification('E', __('error'), __('text_evp_failed_order'));
@@ -45,13 +43,11 @@ function fn_everypay_send_payment()
     }
 
     $everypay_token = isset($_REQUEST['everypayToken']) ? $_REQUEST['everypayToken'] : 0;
-    $merchant_order_id = fn_everypay_place_order();    
-
+    
     if (!empty($merchant_order_id)) {
         if (fn_check_payment_script('everypay.php', $merchant_order_id, $processor_data)) {
             $secret_key = $processor_data['processor_params']['secret_key'];
-            $order_info = fn_get_order_info($merchant_order_id);          
-            
+            $order_info = fn_get_order_info($merchant_order_id);
             
             $amount = fn_everypay_convert_amount($order_info['total'], CART_PRIMARY_CURRENCY, $processor_data['processor_params']['currency']);
 
@@ -59,7 +55,7 @@ function fn_everypay_send_payment()
                 . ' - '
                 . __('privilege_sections.cart') . ' #' . $merchant_order_id
                 . ' - '
-                . $order_info['total'] . ' ' . html_entity_decode($amount['symbol']);
+                . $amount['price'] . ' ' . html_entity_decode($amount['symbol']);
 
             $test_mode = $processor_data['processor_params']['test_mode'];
 
@@ -68,7 +64,7 @@ function fn_everypay_send_payment()
 
             $everypayParams = array(
                 'token' => $everypay_token,
-                'amount' => intval($amount['price'] * 100),
+                'amount' => intval(strval($amount['price'] * 100)),
                 'description' => $description,
                 'payee_email' => $order_info['email'],
                 'payee_phone' => $order_info['phone'],
