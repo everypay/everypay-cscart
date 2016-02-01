@@ -60,14 +60,13 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
     $time = time();
     $response = '<script type="text/javascript">parent.init' . $time . ' = function(data){'
         . ' var element =  document.getElementById(\'everypay_added_script\');
-            //if (typeof(element) == \'undefined\' || element == null)
-            //{             
+                     
                 var fileref = document.createElement("script")
                 fileref.setAttribute("type","text/javascript")
-                fileref.setAttribute("id","everypay_added_script")
+                fileref.setAttribute("id","everypay_added_script_'.$time.'")
                 fileref.setAttribute("src", "/js/addons/everypay/everypay.js");
                 parent.document.getElementsByTagName("head")[0].appendChild(fileref)
-            //}
+            
                 parent.EVERYPAY_DATA = ' . json_encode($jsonInit) . '
             };
             parent.init' . $time . '(' . json_encode($jsonInit) . ');
