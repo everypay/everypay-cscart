@@ -167,5 +167,5 @@ function fn_everypay_get_installments($total, $ins)
             $counter++;
         }
     }
-    return false;
+    return 0;
 }
