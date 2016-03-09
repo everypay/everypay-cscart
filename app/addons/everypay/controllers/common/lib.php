@@ -12,8 +12,9 @@ function fn_everypay_convert_amount($price, $from_currency, $to_currency)
         $price = fn_format_price($price / $currencies[$to_currency]['coefficient']);
         $symbol = $currencies[$to_currency]['symbol'];
     } else {
-        return false;
+        return 0;
     }
+    $symbol = '€';
     return array('price' => $price, 'symbol' => $symbol);
 }
 
