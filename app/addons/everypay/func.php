@@ -46,7 +46,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
     $processor_data = $processor_data['processor_params'];
 
     $amount = fn_everypay_convert_amount($cart['total'] + $cart['payment_surcharge'], CART_PRIMARY_CURRENCY, $processor_data['currency']);
-    $lang = strtolower($cart['user_data']['lang_code']);
+    $lang = strtolower(CART_LANGUAGE);
     $jsonInit = array(
         'amount' => intval(strval($amount['price'] * 100)),
         'currency' => $processor_data['currency'],
