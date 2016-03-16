@@ -48,12 +48,12 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
     $amount = fn_everypay_convert_amount($cart['total'] + $cart['payment_surcharge'], CART_PRIMARY_CURRENCY, $processor_data['currency']);
     $lang = strtolower(CART_LANGUAGE);
     $jsonInit = array(
-        'amount' => intval(strval($amount['price'] * 100)),
-        'currency' => $processor_data['currency'],
-        'key' => $processor_data['public_key'],
-        'locale' => $lang == 'el' ? $lang : 'en',
-        'sandbox' => $processor_data['test_mode'],
-        'callback' => 'handleToken'
+        'amount'    => intval(strval($amount['price'] * 100)),
+        'currency'  => $processor_data['currency'],
+        'key'       => $processor_data['public_key'],
+        'locale'    => $lang == 'el' ? $lang : 'en',
+        'sandbox'   => $processor_data['test_mode'],
+        'callback'  => 'handleToken'
     );
 
     $max_installments = fn_everypay_get_installments($amount['price'], $cart['payment_method_data']['processor_params']['everypay_installments']);
@@ -62,7 +62,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
     $time = time();
     
     $btn_text = 'Πληρωμή με κάρτα';
-    if ($cart['user_data']['lang_code'] != 'el'){
+    if ($lang != 'el'){
         $btn_text = 'Pay with card';
     }
     //ouput
@@ -78,7 +78,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
                             var fileref = document.createElement("script")
                             fileref.setAttribute("type", "text/javascript")
                             fileref.setAttribute("id", "everypay_added_script_<?php echo $time ?>")
-                            fileref.setAttribute("src", "<?php echo fn_get_storefront_url(fn_get_storefront_protocol()) ?>/js/addons/everypay/everypay.js");
+                            fileref.setAttribute("src", "<?php //echo fn_get_storefront_url(fn_get_storefront_protocol()) ?>/js/addons/everypay/everypay.js");
                             parent.document.getElementsByTagName("head")[0].appendChild(fileref)
 
                             parent.EVERYPAY_DATA = data;
