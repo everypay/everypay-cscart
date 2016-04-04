@@ -47,7 +47,7 @@ function fn_everypay_send_payment()
     
     if (!empty($merchant_order_id)) {
         if (fn_check_payment_script('everypay.php', $merchant_order_id, $processor_data)) {
-            $secret_key = $processor_data['processor_params']['secret_key'];
+            $secret_key = trim($processor_data['processor_params']['secret_key']);
             $order_info = fn_get_order_info($merchant_order_id);
             
             $amount = fn_everypay_convert_amount($order_info['total'], CART_PRIMARY_CURRENCY, $processor_data['processor_params']['currency']);

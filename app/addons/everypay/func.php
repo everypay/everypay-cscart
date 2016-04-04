@@ -50,7 +50,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
     $jsonInit = array(
         'amount'    => intval(strval($amount['price'] * 100)),
         'currency'  => $processor_data['currency'],
-        'key'       => $processor_data['public_key'],
+        'key'       => trim($processor_data['public_key']),
         'locale'    => $lang == 'el' ? $lang : 'en',
         'sandbox'   => $processor_data['test_mode'],
         'callback'  => 'handleToken'
