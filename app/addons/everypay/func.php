@@ -78,7 +78,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
                             var fileref = document.createElement("script")
                             fileref.setAttribute("type", "text/javascript")
                             fileref.setAttribute("id", "everypay_added_script_<?php echo $time ?>")
-                            fileref.setAttribute("src", "<?php //echo fn_get_storefront_url(fn_get_storefront_protocol()) ?>/js/addons/everypay/everypay.js");
+                            fileref.setAttribute("src", "<?php echo function_exists('fn_get_storefront_url')?fn_get_storefront_url(fn_get_storefront_protocol()):'' ?>/js/addons/everypay/everypay.js");
                             parent.document.getElementsByTagName("head")[0].appendChild(fileref)
 
                             parent.EVERYPAY_DATA = data;
