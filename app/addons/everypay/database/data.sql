@@ -6,7 +6,7 @@ REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','public
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','secret_key','Private Key');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','test_mode','Test Mode');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','text_evp_failed_order','No response from Everypay has been received. Please contact the store staff and tell them the order ID:');
-REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','text_evp_pending','Payment failed! Please check EveryPay dashboard using Payment Token ');
+REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','text_evp_pending','Payment failed!');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','text_evp_success','Payment Sucessful. You can check the payment under Payments on Everypay dashboard. ');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','From (€)','From (€)');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('en','To (€)','To (€)');
@@ -18,7 +18,7 @@ REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','public
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','secret_key','Ιδιωτικό Κλειδί');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','test_mode','Δοκιμαστική Λειτουργία');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_failed_order','Καμία απάντηση από την Everypay. Παρακαλώ επικοινωνήστε με τα κεντρικά γραφεία της εταιρείας και δώστε τους τον κωδικό παραγγελίας: ');
-REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_pending','Η συναλλαγή απέτυχε! Παρακαλούμε βεβαιωθείτε οτι τα στοιχεία της κάρτας είναι σωστά και οτι η κάρτα αυτή έχει επαρκές υπόλοιπο.');
+REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_pending','Η συναλλαγή απέτυχε!');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','text_evp_success','Επιτυχής πληρωμή. Μπορείτε να ελέγξτε την πληρωμή στον λογαριαμό σας στο Everypay dashboard. ');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','From (€)','Από (€)');
 REPLACE INTO ?:language_values (`lang_code`,`name`,`value`) VALUES ('el','To (€)','Εως (€)');

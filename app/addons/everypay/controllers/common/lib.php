@@ -128,11 +128,11 @@ function fn_everypay_send_payment()
                 fn_order_placement_routines('route', $merchant_order_id);
             } else {
                 $response['order_status'] = 'O';
-                $response['reason_text'] = fn_get_lang_var('text_evp_pending') . $everypay_token . ' (EveryPay: ' . $error . ')';
+                $response['reason_text'] = fn_get_lang_var('text_evp_pending') . __('error') . ' ' . $error;
                 $response['transaction_id'] = @$order;
                 $response['client_id'] = $everypay_token;
                 fn_finish_payment($merchant_order_id, $response);
-                fn_set_notification('E', __('error'), __('text_evp_pending') . $everypay_token . ' (EveryPay: ' . $error . ')');
+                fn_set_notification('E', __('error'), $response['reason_text']);
                 fn_order_placement_routines('checkout_redirect');
             }
         }
