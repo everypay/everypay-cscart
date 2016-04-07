@@ -116,7 +116,7 @@ function fn_everypay_send_payment()
                 curl_close($curl);
             } catch (Exception $e) {
                 $success = false;
-                $error = "CSCART_ERROR:Request to PAyment Gateway Failed";
+                $error = "CSCART_ERROR:Request to Payment Gateway Failed";
             }
 
             if ($success === true) {

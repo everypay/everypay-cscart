@@ -7,12 +7,12 @@ if (!defined('BOOTSTRAP')) {
 
 function fn_everypay_delete_payment_processors()
 {
-    db_query("DELETE FROM ?:payment_processors WHERE addon = 'everypay'");
+    db_query("DELETE FROM ?:payment_processors WHERE processor = 'Everypay'");
 }
 
 function fn_everypay_find_payment_processor()
 {
-    $processor_data = db_get_row("SELECT * FROM ?:payment_processors WHERE addon = ?s", 'everypay');
+    $processor_data = db_get_row("SELECT * FROM ?:payment_processors WHERE processor = ?s", 'Everypay');
 
     if (empty($processor_data)) {
         return false;
@@ -56,7 +56,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
         'callback'  => 'handleToken'
     );
 
-    $max_installments = fn_everypay_get_installments($amount['price'], $cart['payment_method_data']['processor_params']['everypay_installments']);
+    $max_installments = fn_everypay_get_installments($amount['price'], $processor_data['everypay_installments']);
 
     $jsonInit['max_installments'] = $max_installments ? : 0;
     $time = time();
@@ -78,7 +78,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
                             var fileref = document.createElement("script")
                             fileref.setAttribute("type", "text/javascript")
                             fileref.setAttribute("id", "everypay_added_script_<?php echo $time ?>")
-                            fileref.setAttribute("src", "<?php echo function_exists('fn_get_storefront_url')?fn_get_storefront_url(fn_get_storefront_protocol()):'' ?>/js/addons/everypay/everypay.js");
+                            fileref.setAttribute("src", "<?php echo function_exists('fn_get_storefront_url')?fn_get_storefront_url(fn_get_storefront_protocol()):'' ?>/js/addons/everypay/everypay.js?v=<?php echo date('z')?>");
                             parent.document.getElementsByTagName("head")[0].appendChild(fileref)
 
                             parent.EVERYPAY_DATA = data;
@@ -94,7 +94,7 @@ function fn_everypay_prepare_checkout_payment_methods($cart, $sec, $payment_tabs
                     parent.trigger_outer_button();
                 }
             </script>
-            <link type="text/css" rel="stylesheet" href="https://button.everypay.gr/css/button-external.css?version=1.76">
+            <link type="text/css" rel="stylesheet" href="https://button.everypay.gr/css/button-external.css?v=<?php echo date('z')?>">
             <style type="text/css">
                 .everypay-button {
                     font-family: Open Sans,sans-serif,Tahoma,Verdana;
