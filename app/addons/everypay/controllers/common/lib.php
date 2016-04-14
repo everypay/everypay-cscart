@@ -4,17 +4,17 @@ use Tygh\Registry;
 function fn_everypay_convert_amount($price, $from_currency, $to_currency)
 {
     $currencies = Registry::get('currencies');
-    $symbol = $currencies[$to_currency]['symbol'];
+    //$symbol = $currencies[$to_currency]['symbol'];
+    $symbol = '€';
     if ($to_currency == $from_currency) {
         return array('price' => $price, 'symbol' => $symbol);
     }
     if (array_key_exists($to_currency, $currencies)) {
         $price = fn_format_price($price / $currencies[$to_currency]['coefficient']);
-        $symbol = $currencies[$to_currency]['symbol'];
+        //$symbol = $currencies[$to_currency]['symbol'];
     } else {
         return 0;
     }
-    $symbol = '€';
     return array('price' => $price, 'symbol' => $symbol);
 }
 
